@@ -64,9 +64,10 @@ function customerFormValidation() {
 
 function loginButtonClicked(){
     var data = $("#loginForm").serialize();
+    console.log("DATA of the table : ",data);   
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/webpos/login    ",
+        url: "http://localhost:8080/webpos/login",
         data : data,
         success: function (response) {
             console.log("response",response);
