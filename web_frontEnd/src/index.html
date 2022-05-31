@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EA POS | Dashboard</title>
+  <link rel="stylesheet" href="./assets/css/dashboard.css">
+  <link rel="stylesheet" href="./assets/bootstrap-5.1.3-dist/css/bootstrap.css">
+  <script src="./assets/bootstrap-5.1.3-dist/js/bootstrap.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #264653 !important;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img id="company-logo" src="./assets/images/POSlogo.png" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <span class="h4 roboto-fonts thin-font mt-2" style="color: white;">
+        | Customer Database
+      </span>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="navbar-nav poppins-font" style="font-weight: 600;">
+          <a id="posButton" class="nav-link active" href="#" aria-current="page" onclick="posClicked()">POS</a>
+          <a id="customerButton" class="nav-link" href="#" onclick="customerClicked   ()">Customers</a>
+          <a id="stockButton" class="nav-link" href="#" onclick="stockClicked()">Stocks</a>
+          <a id="reportButton" class="nav-link" href="#" onclick="reportClicked()">Reports</a>
+        </div>
+        <div class="navbar-nav" id="buttons-set">
+          <Button class="btn btn-success m-2 float-end">SALE</Button>
+          <Button class="btn btn-danger m-2">Exit</Button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- content -->
+  <!-- This is main layout that divide cart and other objects. -->
+  <div class="container-fluid" id="POSDashboard" style="height: calc(100vh - 10.99vh);">
+    <div class="row h-100">
+      <div class="col-8 p-0 m-0" style="background-color: #212529;">
+        <div class="container-fluid">
+          <div class="row" style="background-color: #212529;">
+            <div class="col-6">
+              <!-- Customer Details Fot Billing -->
+              <div class="container mt-4 p-4" id="customer-details-outline">
+                <div class="row">
+                  <div class="col">
+                    <div class="input-group open-sans-font" style="font-weight: 700;">
+                      <input type="text" class="form-control" placeholder="Customer Code"
+                        aria-label="Recipient's username with two button addons">
+                      <button class="btn text-white" type="button"
+                        style="background-color: #2a9d8f !important; font-weight: 500;">Search</button>
+                      <button class="btn text-white" type="button"
+                        style="background-color: #fb8500 !important; font-weight: 500;">View All</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mt-2 open-sans-font">
+                    <input type="text" class="form-control" placeholder="Customer Name" aria-label="Customer Name">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mt-2 open-sans-font">
+                    <input type="text" class="form-control" placeholder="Telephone Number"
+                      aria-label="Customer Telephone Number">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="container mt-4 p-4" id="item-cart-adding-outline">
+                <div class="row">
+                  <div class="col">
+                    <div class="input-group open-sans-font" style="font-weight: 700;">
+                      <input type="text" class="form-control" placeholder="Item Code"
+                        aria-label="Recipient's username with two button addons">
+                      <button class="btn text-white" type="button"
+                        style="background-color: #8338ec !important; font-weight: 500;">Search</button>
+                      <!-- Ended from here -->
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container mt-3 p-3" id="scan-barcode-outline">
+                <div class="row">
+                  <div class="col">
+                    <Button class="btn btn-secondary w-100" style="background-color: #118ab2 !important;">SCAN
+                      BARCODE</Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="item-details">
+            <div class="col">
+              <div class="container mt-4 p-3" id="item-details-outline">
+                <div class="row">
+                  <div class="col-5">
+                    <div id="item-name-container" class="p-2 text-center">
+                      <h5 style="color: white !important;">Apple Juice 125ml</h5>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="input-group h-100">
+                      <input type="number" class="form-control" placeholder="Req. Amount"
+                        aria-label="Requested amount with plus minus">
+                      <button class="btn " style="color: white; background-color: #118ab2;" type="button">+</button>
+                      <button class="btn " style="color: white; background-color: #c0392b;" type="button">-</button>
+                    </div>
+                  </div>
+
+                  <div class="col-3">
+                    <div id="item-price-container" class="p-2 text-center">
+                      <h5 style="color: white !important;" class="mt-1 mb-1">Rs. 5866.36</h5>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-4 mt-3">
+                    <form action="" class="form-floating">
+                      <input type="date" class="form-control is-valid h-75" id="floatingInputValid"
+                        placeholder="yyyy/mm/dd" value="2022 / 12 / 01">
+                      <!-- <label for="floatingInputInvalid">Invalid input</label> -->
+                      <label for="floatingInputValid">Expire Date</label>
+                    </form>
+                  </div>
+
+                  <div class="col-4 mt-3">
+                    <form action="" class="form-floating">
+                      <input type="date" class="form-control h-100" id="mfdDashboard">
+                      <label for="mfd">Manufactured Date</label>
+                    </form>
+                  </div>
+
+                  <div class="col-4 mt-3">
+                    <form action="" class="form-floating">
+                      <input type="number" style="height: 61px !important;" class="form-control h-100" id="batchNumberDashboard">
+                      <label for="mfd">Batch Number</label>
+                    </form>
+                  </div>
+
+                </div>
+                <div class="row mt-3">
+                  <div class="col-4">
+                    <form action="" class="form-floating input-group flex-nowrap">
+                      <input type="number" class="form-control h-100" id="discount">
+                      <label for="discount">Discount Percentage</label>
+                      <span class="input-group-text" id="addon-wrapping">%</span>
+                    </form>
+                  </div>
+
+                  <div class="col-4">
+                    <form action="" class="form-floating input-group">
+                      <input type="number" class="form-control h-100" id="freeItems">
+                      <label for="freeItems">Free Items</label>
+                      <button class="btn " style="color: white; background-color: #118ab2;" type="button">+</button>
+                      <button class="btn " style="color: white; background-color: #c0392b;" type="button">-</button>
+                    </form>
+                  </div>
+
+                  <div class="col-4 d-grid gap-2">
+                    <button class="btn" style="background-color: #27ae60; color: white;" type="button">ADD TO
+                      CART</button>
+                  </div>
+                </div>
+
+
+              </div> <!-- End of the container -->
+
+
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="mt-4 p-3 open-sans-font text-center" id="shortCutPanelOutline">
+                <Button class="btn" style="background-color: #136f63; color: white;">Clear Item</Button>
+                <Button class="btn" style="background-color: #136f63; color: white;">Clear Customer</Button>
+                <Button class="btn" style="background-color: #0077b6; color: white;">Clear Cart</Button>
+                <Button class="btn" style="background-color: #c0392b; color: white;">Clear Order</Button>
+                <Button class="btn btn-danger" style="color: white;">Exit</Button>
+              </div>
+            </div>
+            <div class="col-4">
+              <div id="logoContainer" class=" mt-4 p-3 text-center">
+                <img src="./assets/images/POSlogo.png" style="width: 150px;" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4" style="background-color: #33383d;">
+        <div class="row m-1 mt-4 pt-2" id="cart-row-overflow">
+          <div class="col">
+            <div class="container" style="height: 55vh !important; overflow-y: scroll;">
+              <table class="table table-hover text-white">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Price Rs.</th>
+                  </tr>
+
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Apple Juice</td>
+                    <td>5</td>
+                    <td>896.36</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Banana Pack</td>
+                    <td>3</td>
+                    <td>600.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Sugar 1kg</td>
+                    <td>1</td>
+                    <td>150.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Apple Juice</td>
+                    <td>5</td>
+                    <td>896.36</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Banana Pack</td>
+                    <td>3</td>
+                    <td>600.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Sugar 1kg</td>
+                    <td>1</td>
+                    <td>150.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Banana Pack</td>
+                    <td>3</td>
+                    <td>600.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Sugar 1kg</td>
+                    <td>1</td>
+                    <td>150.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Apple Juice</td>
+                    <td>5</td>
+                    <td>896.36</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Banana Pack</td>
+                    <td>3</td>
+                    <td>600.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Sugar 1kg</td>
+                    <td>1</td>
+                    <td>150.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Sugar 1kg</td>
+                    <td>1</td>
+                    <td>150.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Apple Juice</td>
+                    <td>5</td>
+                    <td>896.36</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Banana Pack</td>
+                    <td>3</td>
+                    <td>600.00</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Sugar 1kg</td>
+                    <td>1</td>
+                    <td>150.00</td>
+                  </tr>
+                </tbody>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4 mx-3">
+          <div class="col">
+            <div class="input-group mb-3 h-100" id="discountedAmountContainer">
+              <span class="input-group-text open-sans-font" id="discount-label-addon">Discounted Rs.</span>
+              <input type="number" class="form-control open-sans-font" placeholder="Discount" id="discountedAmount"
+                aria-label="discount" aria-describedby="discount-label-addon">
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3" style="height: 10vh;">
+          <div class="col">
+            <div class="d-grid gap-2 h-100">
+              <button onclick="" class="btn " style="background-color: #0077b6; color: white;" type="button"
+                id="mainPaymentButton">
+                <label for="mainPaymentButton" id="mainPaymentButtonLabel">PAY Rs.</label>
+                <h2 class="poppins-font" style="font-weight: 600;">8990.36</h2>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- content -->
+  <!-- This is the customer page -->
+  <div class="container-fluid" style="height: calc(100vh - 10.99vh); " id="customerPage" onloadeddata="loadAllCustomers()">
+    <div class="row h-75" style="background-color: #212529; color: white;">
+      <div class="col m-4 p-4" id="customerDetailsTableContainer" style="height: 60vh; overflow-y: scroll;">
+
+        <table class="table table-hover table-dark" id="customerDetailsTable">
+
+          <thead>
+            <tr class="poppins-font h5">
+              <th class="medium-font">CID</th>
+              <th class="medium-font">NAME</th>
+              <th class="medium-font">TELEPHONE</th>
+              <th class="medium-font">ADDRESS</th>
+              <th class="medium-font">ORDERS</th>
+              <th class="medium-font">Active</th>
+            </tr>
+          </thead>
+          <tbody class="roboto-fonts">
+            <!--<tr>
+              <th>C001</th>
+              <td>Robert Patricia</th>
+              <td>070 20 53 777</th>
+              <td>Panadura</th>
+              <td>8</th>
+              <td>
+                <span class="poppins-font active-badge px-2">Active</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C002</th>
+              <td>Nimal Jayarathne</td>
+              <td>071 22 44 526</td>
+              <td>Colombo</td>
+              <td>1</td>
+              <td>
+                <span class="poppins-font disabled-badge px-2">Disabled</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C001</th>
+              <td>Robert Patricia</th>
+              <td>070 20 53 777</th>
+              <td>Panadura</th>
+              <td>8</th>
+              <td>
+                <span class="poppins-font active-badge px-2">Active</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C001</th>
+              <td>Robert Patricia</th>
+              <td>070 20 53 777</th>
+              <td>Panadura</th>
+              <td>8</th>
+              <td>
+                <span class="poppins-font active-badge px-2">Active</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C001</th>
+              <td>Robert Patricia</th>
+              <td>070 20 53 777</th>
+              <td>Panadura</th>
+              <td>8</th>
+              <td>
+                <span class="poppins-font active-badge px-2">Active</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C002</th>
+              <td>Nimal Jayarathne</td>
+              <td>071 22 44 526</td>
+              <td>Colombo</td>
+              <td>1</td>
+              <td>
+                <span class="poppins-font disabled-badge px-2">Disabled</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C002</th>
+              <td>Nimal Jayarathne</td>
+              <td>071 22 44 526</td>
+              <td>Colombo</td>
+              <td>1</td>
+              <td>
+                <span class="poppins-font disabled-badge px-2">Disabled</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C001</th>
+              <td>Robert Patricia</th>
+              <td>070 20 53 777</th>
+              <td>Panadura</th>
+              <td>8</th>
+              <td>
+                <span class="poppins-font active-badge px-2">Active</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C001</th>
+              <td>Robert Patricia</th>
+              <td>070 20 53 777</th>
+              <td>Panadura</th>
+              <td>8</th>
+              <td>
+                <span class="poppins-font active-badge px-2">Active</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C001</th>
+              <td>Robert Patricia</th>
+              <td>070 20 53 777</th>
+              <td>Panadura</th>
+              <td>8</th>
+              <td>
+                <span class="poppins-font active-badge px-2">Active</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>C001</th>
+              <td>Robert Patricia</th>
+              <td>070 20 53 777</th>
+              <td>Panadura</th>
+              <td>8</th>
+              <td>
+                <span class="poppins-font active-badge px-2">Active</span>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row h-25" style="background-color: #212529; color: white;">
+      <div class="col m-4 p-4" style="height: fit-content;" id="customerQuickMenuContainer">
+        <div class="row">
+          <div class="col px-0">
+            <Button class="btn btn-primary mx-0" data-bs-toggle="modal" data-bs-target="#customerAddingModalBackdrop">+ Add Customers</Button>
+
+          </div>
+          <div class="col-3">
+            <Button class="btn btn-danger float-end mx-2">Delete</Button>
+            <Button class="btn text-white float-end mx-2" style="background-color: #bb3e03;">Modify</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- content -->
+  <!-- This is the item list page -->
+  <div class="container-fluid" style="height: calc(100vh - 10.99vh);" id="itemListPage">
+    <div class="row h-75" style="background-color: #212529; color: white;">
+      <div class="col m-4 p-4" id="itemDetailsTableContainer" style="height: 60vh; overflow-y: scroll;">
+
+        <table class="table table-hover table-dark">
+
+          <thead>
+            <tr class="poppins-font h5">
+              <th class="medium-font">IID</th>
+              <th class="medium-font">ITEM</th>
+              <th class="medium-font">UNIT PRICE (Rs)</th>
+              <th class="medium-font">IN STOCK</th>
+              <th class="medium-font">BATCH NUM</th>
+              <th class="medium-font">MFD</th>
+              <th class="medium-font">EX. DATE</th>
+            </tr>
+          </thead>
+          <tbody class="roboto-fonts">
+            <tr>
+              <th>I001</th>
+              <td>Apple Juice</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Orange Barley</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06
+                <span class="disabled-badge poppins-font px-2 mx-2">EXPIRED</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Banana</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Vanilla Cake</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Necto 200ml</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Bites </th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Nelli Juice 50ml</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Sponge Cake 90g</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-01-06
+                <span class="disabled-badge px-2 mx-2 poppins-font">EXPIRED</span>
+              </td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Apple Juice</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Apple Juice</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Apple Juice</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+            <tr>
+              <th>I001</th>
+              <td>Apple Juice</th>
+              <td>780.00</th>
+              <td>10</th>
+              <td>100526</th>
+              <td>2020-05-06</th>
+              <td>2022-09-06</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row h-25" style="background-color: #212529; color: white;">
+      <div class="col m-4 p-4" style="height: fit-content;" id="itemQuickMenuContainer">
+        <div class="row">
+          <div class="col px-0">
+            <button class="btn btn-primary mx-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Add
+              Item</button>
+
+          </div>
+          <div class="col-3">
+            <Button class="btn btn-danger float-end mx-2">Delete</Button>
+            <Button class="btn text-white float-end mx-2" style="background-color: #bb3e03;">Edit Stocks</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <!-- This is the modal of the item adding UI -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark">
+        <div class="modal-header">
+          <h4 class="modal-title poppins-font medium-font text-white" id="staticBackdropLabel">Add Items | </h4>
+          <h5 class="roboto-fonts medium-font px-2 mx-2 m-1 p-1" id="generatedItemCode">CODE : I001</h5>
+          <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- This is content of the modal -->
+          <div class="container posModal" id="itemAddingModal">
+            <div class="row mt-2 p-1">
+
+
+              <div class="col-7">
+                <div class="input-group mb-3">
+                  <span class="input-group-text w-25 poppins-font medium-font" id="itemName-addon"
+                    style="background-color: #0077b6; border: #0077b6; color: white;">Item Name</span>
+                  <input type="text" class="form-control poppins-font" placeholder="Item Name" aria-label="item name"
+                    aria-describedby="itemName-addon" id="itemName">
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="input-group mb-3">
+                  <span class="input-group-text poppins-font medium-font" id="amount-addon"
+                    style="background-color: #e63946; border: #e63946; color: white; width: 35%;">Amount</span>
+                  <input type="text" class="form-control poppins-font" placeholder="Amount Of Items" aria-label="amount"
+                    aria-describedby="amount-addon" id="amountOfItem">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row p-1">
+              <div class="col">
+                <div class="input-group mb-3">
+                  <span class="input-group-text w-25 poppins-font medium-font" id="itemPriceAddon"
+                    style="background-color: #218c74; border: #218c74; color: white;">Price Rs.</span>
+                  <input type="number" class="form-control poppins-font" placeholder="Item Price"
+                    aria-label="itePriceAddon" aria-describedby="item price" id="price">
+                </div>
+              </div>
+              <div class="col">
+                <div class="input-group mb-3">
+                  <span class="input-group-text w-25 poppins-font medium-font" id="itemBatchNumber"
+                    style="background-color: #b71540; border: #b71540; color: white;">B. Num. </span>
+                  <input type="number" class="form-control poppins-font" placeholder="Item Price"
+                    aria-label="itePriceAddon" aria-describedby="itemName-addon" id="batchNumber">
+                </div>
+              </div>
+            </div>
+
+            <div class="row p-1">
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="date" class="form-control" id="expireDate" placeholder="yyyy-mm-dd">
+                  <label for="expireDate">Expire Date</label>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="date" class="form-control" id="mfd" placeholder="yyyy-mm-dd">
+                  <label for="mfd">Manufactured Date</label>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn text-white " style="background-color: #9b2226; position: absolute; left: 4%;">Clear All </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="poppins-font medium-font btn btn-lg text-white" onclick="saveItem()" style="background-color: #2980b9;"> + SAVE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal -->
+  <!-- This is the modal for adding customers -->
+  <div class="modal fade" id="customerAddingModalBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="customerBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark">
+        <div class="modal-header">
+          <h4 class="modal-title poppins-font medium-font text-white" id="customerBackdropLabel">Add Customers | </h4>
+          <h5 class="roboto-font  s medium-font px-2 mx-2 m-1 p-1" id="generatedCustomerCode">CODE : C001</h5>
+          <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- This is content of the modal -->
+          <div class="container posModal" id="customerAddingModal">
+            <div class="row mt-2 p-1">
+
+
+              <div class="col">
+                <div class="input-group mb-3" id="customerNameContainer">
+                  <span class="input-group-text w-25 poppins-font medium-font" id="customerName-Addon"
+                    style="background-color: #9e2a2b; border: #9e2a2b; color: white;">Customer Name</span>
+                  <input type="text" class="form-control poppins-font" onkeyup="customerFormValidation()" placeholder="Customer Name" aria-label="customer name"
+                    aria-describedby="customerName-Addon" id="customerName">
+                    <div class="red-warning" style="display: none;"><span style="font-weight: 800;">!</span></div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row p-1">
+              <div class="col">
+                <div class="input-group mb-3">
+                  <span class="input-group-text w-25 poppins-font medium-font" id="customerAddressAddon"
+                    style="background-color: #218c74; border: #218c74; color: white;">Address</span>
+                  <input type="text" class="form-control poppins-font" placeholder="Customer Address" id="customerAddress"
+                    aria-label="customerAddressAddon" aria-describedby="customer address">
+                </div>
+              </div>
+              <div class="col">
+                <div class="input-group mb-3">
+                  <span class="input-group-text  poppins-font medium-font" id="customerTelephoneAddon"
+                    style="background-color: #b71540; border: #b71540; color: white; width: 30%;">Telephone </span>
+                  <input type="number" class="form-control poppins-font" placeholder="Customer Telephone"
+                    aria-label="customerTelephoneAddon" aria-describedby="customer Telephone" id="customerTelephone">
+                </div>
+              </div>
+            </div>
+
+            <div class="row p-1">
+              <div class="col">
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="customerEmail" placeholder="sample@sample.com">
+                  <label for="customerEmail">Customer E-mail</label>
+                </div>
+              </div>
+
+              <div class="col d-flex align-items-center justify-content-around">
+                
+                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font" style="border-color: #6F1E51; background-color: #6F1E51;" id="bronzeButton">BRONZE</button>
+                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font" style="border-color: #006266;" id="silverButton">SILVER</button>
+                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font" style="border-color: #ff3f34;" id="goldButton">GOLD</button>
+
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn text-white" onclick="clearCustomerAddForm()" style="background-color: #9b2226; position: absolute; left: 4%;">Clear All </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="poppins-font medium-font btn btn-lg text-white" onclick="customerSave()" style="background-color: #27ae60;"> + SAVE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./assets/jQuery/jquery-3.6.0.min.js"></script>
+  <script src="./assets/js/controllers/script.js"></script>
+
+
+</body>
+
+</html>

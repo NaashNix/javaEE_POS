@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+#main-heading{
+    color: #005f73;
+}
+
+#outer-container{
+    border: #005f73 2px solid;
+    border-radius: 10px;
+}
+
+#button-group{
+    position: absolute;
+    right: 0;
+}
+
+#customerSave:focus{
+    box-shadow: 0 0 0 .25rem rgba(171, 240, 60, 0.5)
+}
+
+#customerCode{
+    color: white;
+    background-color: #e63946;
+    border-radius: 15px;
+}
+
+.titleFont{
+    font-family: 'Poppins',sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
