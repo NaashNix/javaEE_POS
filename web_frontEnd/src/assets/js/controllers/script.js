@@ -1,7 +1,8 @@
-var z = jQuery.noConflict();
+// var z = jQuery.noConflict();
 initializer()
-z("#POSDashboard").css("display", "block");
-z("#posButton").attr("class", "nav-link active");
+$("#POSDashboard").css("display", "none");
+$("#posButton").attr("class", "nav-link active");
+$("#pos_dashboard_menu").css("display","none");
 
 
 // Making Customer and Item arrays.
@@ -48,33 +49,45 @@ function customerFormValidation() {
     const customerAddress = "^[a-zA-Z0-9\s,'/-]*$"
     const email = "/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/</>"
 
-    const cName = z("#customerName").val();
+    const cName = $("#customerName").val();
 
     if (cName.match(cName)) {
         // z("#customerName").css({ 'border': '1px solid white' });
         resetInputs("#customerName", "#customerNameContainer");
     } else {
-        z("#customerName").css({
+        $("#customerName").css({
             'border-bottom': '2px solid #FFCC00'
         });
     }
 
 }
 
+function loginButtonClicked(){
+    var data = $("#loginForm").serialize();
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/webpos/login    ",
+        data : data,
+        success: function (response) {
+            console.log("response",response);
+        }
+    });
+}
+
 function sayWarning(id, container) {
-    z(id).css({ 'border-bottom': '2px solid red' });
+    $(id).css({ 'border-bottom': '2px solid red' });
     // z(container).append('<div class="red-warning"><span style="font-weight: 800; ">!</span></div>');
     // z(id.css('display','block'));
-    z(id + " div:nth-child(2)").css('display', 'block');
+    $(id + " div:nth-child(2)").css('display', 'block');
     // console.log();
 }
 
 function resetInputs(id, container) {
-    z(id).css({
+    $(id).css({
         'border': '1px solid white'
     });
 
-    var obj = z("container div");
+    var obj = $("container div");
     obj.remove();
     // z(container+" div").css("display","none");
     // document.getElementById("customerNameContainer").parentNode.removeChild("div");
@@ -163,7 +176,7 @@ function resetInputs(id, container) {
 function customerSave() {
     var noProblem = false; // This false = no problem. if true there is problem.
     {
-        if (z("#customerName").val() == "") {
+        if ($("#customerName").val() == "") {
             alert("Please Enter Valid Name");
             sayWarning("#customerName", "#customerNameContainer");
 
@@ -172,27 +185,27 @@ function customerSave() {
             resetInputs("#customerName", "#customerNameContainer");
         }
 
-        if (z("#customerAddress").val() == "") {
+        if ($("#customerAddress").val() == "") {
             console.log("Please Enter Customer Address");
 
         } else {
             resetInputs("#customerAddress");
         }
 
-        if (z("#customerTelephone").val() === "") {
+        if ($("#customerTelephone").val() === "") {
             console.log("Please Enter Telephone Number");
         }
-        if (z("#customerEmail").val() == "") {
+        if ($("#customerEmail").val() == "") {
             console.log("Please Enter Customer Email");
         }
         if (!noProblem) {
             console.log("No Problem");
             let customer = {
-                id: z("#generatedCustomerId").text(),
-                name: z("#customerName").val(),
-                address: z("#customerAddress").val(),
-                telephone: z("#customerTelephone").val(),
-                email: z("#customerEmail").val(),
+                id: $("#generatedCustomerId").text(),
+                name: $("#customerName").val(),
+                address: $("#customerAddress").val(),
+                telephone: $("#customerTelephone").val(),
+                email: $("#customerEmail").val(),
                 account: "Gold"
             };
 
@@ -206,21 +219,21 @@ function customerSave() {
 
 function clearCustomerAddForm() {
     console.log("Cleared");
-    z("#customerEmail").val("");
-    z("#customerAddress").val("");
-    z("#customerTelephone").val("");
-    z("#customerName").val("");
+    $("#customerEmail").val("");
+    $("#customerAddress").val("");
+    $("#customerTelephone").val("");
+    $("#customerName").val("");
 }
 
 
 function saveItem() {
     let newItem = {
-        itemName: z("#itemName").val(),
-        amount: z("#amountOfItem").val(),
-        price: z("#price").val(),
-        batchNumber: z("#batchNumber").val(),
-        expireDate: z("#expireDate").val(),
-        mfd: z("#mfd").val()
+        itemName: $("#itemName").val(),
+        amount: $("#amountOfItem").val(),
+        price: $("#price").val(),
+        batchNumber: $("#batchNumber").val(),
+        expireDate: $("#expireDate").val(),
+        mfd:    $("#mfd").val()
     };
 
     items.push(newItem);

@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="webpos">
+    <output-path>$PROJECT_DIR$/out/artifacts/webpos</output-path>
+    <root id="archive" name="webpos.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="pos_server" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/pos_server/src/utils/lib/commons-dbcp2-2.9.0.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/pos_server/src/utils/lib/commons-logging-1.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/pos_server/src/utils/lib/commons-pool2-2.11.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/pos_server/src/utils/lib/mysql-connector-java-5.1.49.jar" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="pos_server/web/Web" />
+    </root>
+  </artifact>
+</component>

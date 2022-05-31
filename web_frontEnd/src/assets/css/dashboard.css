@@ -3,6 +3,11 @@
     /* box-sizing: border-box !important;*/
 }
 
+#loginScreen{
+    position: absolute !important;
+
+}
+
 #company-logo {
     width: 10rem;
 }

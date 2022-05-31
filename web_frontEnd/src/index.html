@@ -16,6 +16,23 @@
 </head>
 
 <body>
+
+  <section id="loginScreen">
+    <form action="/login" class="m-5" id="loginForm">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon1">username</span>
+        <input name="userName" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" >password</span>
+        <input name="password" type="text" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+      </div>
+
+      <button type="button" onclick="loginButtonClicked()" class="btn btn-outline-primary">Login</button>
+    </form>
+  </section>
+
+  <section id="pos_dashboard_menu">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #264653 !important;">
     <div class="container-fluid">
@@ -43,6 +60,7 @@
       </div>
     </div>
   </nav>
+  </section>
 
   <!-- content -->
   <!-- This is main layout that divide cart and other objects. -->
