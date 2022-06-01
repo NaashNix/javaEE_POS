@@ -21,7 +21,9 @@ public class LoginDAOImpl implements LoginDAO {
         ResultSet resultSet = statement.executeQuery();
 
         while(resultSet.next()){
-            return resultSet.getString(1);
+            String receivedUsername = resultSet.getString(1);
+            connection.close();
+            return receivedUsername;
         }
         connection.close();
         return null;
@@ -36,8 +38,11 @@ public class LoginDAOImpl implements LoginDAO {
         statement.setObject(1,username);
         ResultSet resultSet = statement.executeQuery();
 
+
         while (resultSet.next()){
-            return resultSet.getString(1);
+            String receivedPassword = resultSet.getString(1);
+            connection.close();
+            return receivedPassword;
         }
         connection.close();
         return null;

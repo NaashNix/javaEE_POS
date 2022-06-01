@@ -2,12 +2,27 @@
 initializer()
 $("#POSDashboard").css("display", "none");
 $("#posButton").attr("class", "nav-link active");
-$("#pos_dashboard_menu").css("display","none");
+$("#pos_dashboard_menu").css("display", "none");
 
 
-// Making Customer and Item arrays.
-const customers = [];
-const items = [];
+var usernameFiled = document.querySelector("#usernameField");
+var passwordField = document.querySelector("#passwordField");
+
+usernameFiled.addEventListener("keypress", (event) => {
+    if (event.keyCode === 13) { 
+        event.preventDefault();
+        
+        loginButtonClicked();
+    }
+});
+
+passwordField.addEventListener("keypress", (event) => {
+    if (event.keyCode === 13) { 
+        event.preventDefault();
+        
+        loginButtonClicked();
+    }
+});
 
 function initializer() {
     document.getElementById("customerPage").style.display = "none";
@@ -62,17 +77,25 @@ function customerFormValidation() {
 
 }
 
-function loginButtonClicked(){
+function loginButtonClicked() {
     var data = $("#loginForm").serialize();
-    console.log("DATA of the table : ",data);   
+    console.log("DATA of the table : ", data);
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/webpos/login",
-        data : data,
+        data: data,
         success: function (response) {
-            console.log("response",response);
+            if (response == 'true') {
+                redirectToDashboard();
+            }
         }
     });
+}
+
+function redirectToDashboard() {
+    $("#pos_dashboard_menu").css("display", "block");
+    $("#loginScreen").css("display", "none");
+    $("#POSDashboard").css("display", "block");
 }
 
 function sayWarning(id, container) {
@@ -234,7 +257,7 @@ function saveItem() {
         price: $("#price").val(),
         batchNumber: $("#batchNumber").val(),
         expireDate: $("#expireDate").val(),
-        mfd:    $("#mfd").val()
+        mfd: $("#mfd").val()
     };
 
     items.push(newItem);
@@ -244,28 +267,28 @@ function saveItem() {
 loadAllCustomers();
 
 function loadAllCustomers() {
-    customers.forEach(element => {
-        if (element == null) {
-            console.log("Loaded But Null");
-            return;
-        } else {
-            console.log("Loaded");
-            let cName = element.name;
-            let cAddress = element.address;
-            let cId = element.id;
-            let cEmail = element.email;
-            let cTelephone = element.telephone;
-            z("#customerDetailsTable>tbody").append(
-                "<tr>" +
-        "<th scope=\"row\">"+ cId +"</th>" +
-        "<td>" + cName + "</td>"  +
-        "<td>" + cTelephone + "</td>" +
-        "<td>" + cAddress + "</td>"  +
-        "<td>" + 5 + "</td>"  +
-        "<td>" + null + "</td>"  +
-        "</tr>"
-            );
-        }
-    });
+    // customers.forEach(element => {
+    //     if (element == null) {
+    //         console.log("Loaded But Null");
+    //         return;
+    //     } else {
+    //         console.log("Loaded");
+    //         let cName = element.name;
+    //         let cAddress = element.address;
+    //         let cId = element.id;
+    //         let cEmail = element.email;
+    //         let cTelephone = element.telephone;
+    //         z("#customerDetailsTable>tbody").append(
+    //             "<tr>" +
+    //     "<th scope=\"row\">"+ cId +"</th>" +
+    //     "<td>" + cName + "</td>"  +
+    //     "<td>" + cTelephone + "</td>" +
+    //     "<td>" + cAddress + "</td>"  +
+    //     "<td>" + 5 + "</td>"  +
+    //     "<td>" + null + "</td>"  +
+    //     "</tr>"
+    //         );
+    //     }
+    // });
 }
 

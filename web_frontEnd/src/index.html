@@ -17,15 +17,15 @@
 
 <body>
 
-  <section id="loginScreen">
-    <form action="" class="m-5" id="loginForm">
+  <section id="loginScreen" class="w-25 h-25">
+    <form action=""  id="loginForm">
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">username</span>
-        <input name="userName" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        <input name="userName" id="usernameField" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
       </div>
       <div class="input-group mb-3">
         <span class="input-group-text" >password</span>
-        <input name="password" type="text" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+        <input name="password" type="text" id="passwordField" class="form-control loginFields" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
       </div>
 
       <button type="button" onclick="loginButtonClicked()" class="btn btn-outline-primary">Login</button>
