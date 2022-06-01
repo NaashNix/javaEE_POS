@@ -1,8 +1,10 @@
 package dao.custom;
 
-public interface LoginDAO {
-    String getUserName(String username);
+import java.sql.SQLException;
 
-    String getPassword(String username);
+public interface LoginDAO {
+    String getUserName(String username) throws SQLException, ClassNotFoundException;
+
+    String getPassword(String username) throws SQLException, ClassNotFoundException;
 
 }
