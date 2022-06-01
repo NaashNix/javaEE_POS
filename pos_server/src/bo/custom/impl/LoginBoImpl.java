@@ -12,13 +12,19 @@ public class LoginBoImpl implements LoginBO {
 
     @Override
     public boolean getTheUserNameAvailability(String username) throws SQLException, ClassNotFoundException {
-        String userName = loginDAO.getUserName(username);
-        return userName != null;
+        if (loginDAO.getUserName(username) == null){
+            return false;
+        }
+        return true;
+
+
     }
 
     @Override
     public boolean getThePasswordById(String username,String userEnteredPassword) throws SQLException, ClassNotFoundException {
-        String password = loginDAO.getPassword(username);
-        return userEnteredPassword.equals(password);
+        if (loginDAO.getPassword(username) == null){
+            return false;
+        }
+        return true;
     }
 }

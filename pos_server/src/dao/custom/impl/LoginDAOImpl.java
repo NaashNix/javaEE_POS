@@ -1,8 +1,10 @@
 package dao.custom.impl;
 
-import dao.CrudUtil;
 import dao.custom.LoginDAO;
+import serverlet.LoginServlet;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,19 +12,34 @@ public class LoginDAOImpl implements LoginDAO {
 
     @Override
     public String getUserName(String username) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.executeQuery("SELECT user_name FROM login_details WHERE user_name = ?", username);
+
+        System.out.println("DAOImpl is running.");
+
+        Connection connection = LoginServlet.ds.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT user_name FROM login_details WHERE user_name = ?");
+        statement.setObject(1,username);
+        ResultSet resultSet = statement.executeQuery();
+
         while(resultSet.next()){
             return resultSet.getString(1);
         }
+        connection.close();
         return null;
+
     }
 
     @Override
     public String getPassword(String username) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.executeQuery("SELECT user_name FROM login_details WHERE user_name = ?", username);
+
+        Connection connection = LoginServlet.ds.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT user_name FROM login_details WHERE user_name = ?");
+        statement.setObject(1,username);
+        ResultSet resultSet = statement.executeQuery();
+
         while (resultSet.next()){
             return resultSet.getString(1);
         }
+        connection.close();
         return null;
     }
 }

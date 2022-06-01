@@ -1,5 +1,7 @@
 package dao;
 
+import dao.custom.impl.LoginDAOImpl;
+
 public class DAOFactory implements SuperDAO{
     private static DAOFactory daoFactory;
 
@@ -20,7 +22,7 @@ public class DAOFactory implements SuperDAO{
     public SuperDAO getDao(DAOTypes daoTypes){
         switch (daoTypes){
             case LOGIN:
-                return null;
+                return new LoginDAOImpl();
             default:
                 return null;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path="/">
-    <Resources
+    <Resource
             name="jdbc/pool"
             type="javax.sql.DataSource"
             driverClassName="com.mysql.jdbc.Driver"
@@ -12,5 +12,5 @@
 
     >
 
-    </Resources>
+    </Resource>
 </Context>
