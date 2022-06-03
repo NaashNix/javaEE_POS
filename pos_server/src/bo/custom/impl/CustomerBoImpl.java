@@ -2,10 +2,11 @@ package bo.custom.impl;
 
 import bo.custom.CustomerBO;
 import dao.DAOFactory;
-import dao.SuperDAO;
 import dao.custom.CustomerDAO;
 import dto.CustomerDTO;
+import entity.CustomerEntity;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
 public class CustomerBoImpl implements CustomerBO {
@@ -14,8 +15,23 @@ public class CustomerBoImpl implements CustomerBO {
 
     @Override
     public CustomerDTO searchCustomer(String requestedID) throws SQLException {
-        customerDAO.getCustomer(requestedID);
+        CustomerEntity customer = customerDAO.getCustomer(requestedID);
+        if (customer != null){
+           return new CustomerDTO(customer.getIdNumber(), customer.getCustomerName(),
+                    customer.getTelephoneNumber(), customer.getAddress());
+        }else{
+            return null;
+        }
 
-        return null;
+    }
+
+    @Override
+    public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException {
+        return customerDAO.saveCustomer(new CustomerEntity(
+                customerDTO.getIdNumber(),
+                customerDTO.getCustomerName(),
+                customerDTO.getTelephoneNumber(),
+                customerDTO.getAddress()
+        ));
     }
 }

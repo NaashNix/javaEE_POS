@@ -1,5 +1,6 @@
 package bo;
 
+import bo.custom.impl.CustomerBoImpl;
 import bo.custom.impl.LoginBoImpl;
 
 public class BoFactory implements SuperBO{
@@ -16,14 +17,15 @@ public class BoFactory implements SuperBO{
     }
 
     public enum BoTypes{
-        LOGIN
+        LOGIN,CUSTOMER
     }
 
     public static SuperBO getBO(BoTypes boTypes) {
         switch (boTypes){
             case LOGIN:
                 return new LoginBoImpl();
-
+            case CUSTOMER:
+                return new CustomerBoImpl();
             default:
                 return null;
         }

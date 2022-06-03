@@ -29,4 +29,16 @@ public class CustomerDAOImpl implements CustomerDAO {
 
         return null;
     }
+
+    @Override
+    public boolean saveCustomer(CustomerEntity entity) throws SQLException {
+        Connection connection = CustomerServlet.ds.getConnection();
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO customers VALUES(?,?,?,?)");
+        statement.setObject(1,entity.getIdNumber());
+        statement.setObject(2,entity.getCustomerName());
+        statement.setObject(3,entity.getTelephoneNumber());
+        statement.setObject(4,entity.getAddress());
+
+        return statement.executeUpdate()>0;
+    }
 }

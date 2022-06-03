@@ -9,4 +9,6 @@ import java.util.ArrayList;
 
 public interface CustomerDAO extends SuperDAO {
     public CustomerEntity getCustomer(String idNumber) throws SQLException;
+
+    boolean saveCustomer (CustomerEntity entity) throws SQLException;
 }

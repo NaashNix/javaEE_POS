@@ -4,25 +4,7 @@ $("#POSDashboard").css("display", "none");
 $("#posButton").attr("class", "nav-link active");
 $("#pos_dashboard_menu").css("display", "none");
 
-
-var usernameFiled = document.querySelector("#usernameField");
-var passwordField = document.querySelector("#passwordField");
-
-usernameFiled.addEventListener("keypress", (event) => {
-    if (event.keyCode === 13) { 
-        event.preventDefault();
-        
-        loginButtonClicked();
-    }
-});
-
-passwordField.addEventListener("keypress", (event) => {
-    if (event.keyCode === 13) { 
-        event.preventDefault();
-        
-        loginButtonClicked();
-    }
-});
+// Function for the menu.
 
 function initializer() {
     document.getElementById("customerPage").style.display = "none";
@@ -59,6 +41,27 @@ function reportClicked() {
     // document.getElementById("reportButton").setAttribute("class","nav-link active");
 }
 
+// Listener for login button.
+
+var usernameFiled = document.querySelector("#usernameField");
+var passwordField = document.querySelector("#passwordField");
+
+usernameFiled.addEventListener("keypress", (event) => {
+    if (event.keyCode === 13) { 
+        event.preventDefault();
+        
+        loginButtonClicked();
+    }
+});
+
+passwordField.addEventListener("keypress", (event) => {
+    if (event.keyCode === 13) { 
+        event.preventDefault();
+        
+        loginButtonClicked();
+    }
+});
+
 function customerFormValidation() {
     const customerName = "([A-z])\w+"
     const customerAddress = "^[a-zA-Z0-9\s,'/-]*$"
@@ -91,6 +94,8 @@ function loginButtonClicked() {
         }
     });
 }
+
+
 
 function redirectToDashboard() {
     $("#pos_dashboard_menu").css("display", "block");
@@ -197,7 +202,7 @@ function resetInputs(id, container) {
 
 // ------------------------------
 
-function customerSave() {
+function customerSave() {   
     var noProblem = false; // This false = no problem. if true there is problem.
     {
         if ($("#customerName").val() == "") {
