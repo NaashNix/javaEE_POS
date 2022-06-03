@@ -1,5 +1,6 @@
 package dao;
 
+import dao.custom.impl.CustomerDAOImpl;
 import dao.custom.impl.LoginDAOImpl;
 
 public class DAOFactory implements SuperDAO{
@@ -16,13 +17,15 @@ public class DAOFactory implements SuperDAO{
     }
 
     public enum DAOTypes{
-        LOGIN
+        LOGIN,CUSTOMER
     }
 
     public SuperDAO getDao(DAOTypes daoTypes){
         switch (daoTypes){
             case LOGIN:
                 return new LoginDAOImpl();
+            case CUSTOMER:
+                return new CustomerDAOImpl();
             default:
                 return null;
 

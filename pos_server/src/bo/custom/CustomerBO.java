@@ -1,5 +1,9 @@
 package bo.custom;
 
-public interface CustomerBO {
+import dto.CustomerDTO;
 
+import java.sql.SQLException;
+
+public interface CustomerBO {
+    public CustomerDTO searchCustomer(String requestedID) throws SQLException;
 }

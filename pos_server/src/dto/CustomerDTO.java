@@ -1,15 +1,15 @@
-package entity;
+package dto;
 
-public class CustomerEntity {
+public class CustomerDTO {
     private String idNumber;
     private String customerName;
     private String telephoneNumber;
     private String address;
 
-    public CustomerEntity() {
+    public CustomerDTO() {
     }
 
-    public CustomerEntity(String idNumber, String customerName, String telephoneNumber, String address) {
+    public CustomerDTO(String idNumber, String customerName, String telephoneNumber, String address) {
         this.idNumber = idNumber;
         this.customerName = customerName;
         this.telephoneNumber = telephoneNumber;
