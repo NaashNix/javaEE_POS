@@ -11,4 +11,6 @@ public interface CustomerDAO extends SuperDAO {
     public CustomerEntity getCustomer(String idNumber) throws SQLException;
 
     boolean saveCustomer (CustomerEntity entity) throws SQLException;
+
+    ArrayList<CustomerEntity> getAllCustomers() throws SQLException;
 }

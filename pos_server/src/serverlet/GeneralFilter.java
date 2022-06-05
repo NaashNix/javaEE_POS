@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/login")
+@WebFilter(urlPatterns = "/*")
 public class GeneralFilter implements Filter {
 
     public GeneralFilter() {

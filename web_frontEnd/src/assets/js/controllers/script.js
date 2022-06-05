@@ -229,21 +229,32 @@ function customerSave() {
         }
         if (!noProblem) {
             console.log("No Problem");
-            let customer = {
-                id: $("#generatedCustomerId").text(),
-                name: $("#customerName").val(),
-                address: $("#customerAddress").val(),
-                telephone: $("#customerTelephone").val(),
-                email: $("#customerEmail").val(),
-                account: "Gold"
-            };
+            
+            // Making data object to send.
+            var newCustomerInfo = {
+                customerId :  $("#generatedCustomerCode").text(),
+                customerName : $("#customerName").val(),
+                customerTelephone : $("#customerTelephone").val(),
+                customerAddress : $("#customerAddress").val()
+            }
 
-            customers.push(customer);
+            // Saving Customer, Sending data to the servlet.
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/webpos/customer",
+                data: newCustomerInfo,
+                dataType: "application/json",
+                success: function (response) {
+                    console.log("Response",response);
+                }
+            }); 
+
+            // customers.push(customer);
             loadAllCustomers();
         }
     }
 
-    console.log(customers[0].name);
+    // console.log(customers[0].name);
 }
 
 function clearCustomerAddForm() {
@@ -272,6 +283,19 @@ function saveItem() {
 loadAllCustomers();
 
 function loadAllCustomers() {
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/webpos/customer?option=GETALL",
+        dataType: "dataType",
+        success: function (response) {
+            for (const customer of resp.data) {
+                let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`;
+                $("#tblCustomerJson").append(row);
+            }
+        }
+    });
+
     // customers.forEach(element => {
     //     if (element == null) {
     //         console.log("Loaded But Null");

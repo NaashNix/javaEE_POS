@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CustomerDAOImpl implements CustomerDAO {
 
@@ -26,7 +27,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                     ,resultSet.getString(3)
                     ,resultSet.getString(4));
         }
-
+        connection.close();
         return null;
     }
 
@@ -38,7 +39,25 @@ public class CustomerDAOImpl implements CustomerDAO {
         statement.setObject(2,entity.getCustomerName());
         statement.setObject(3,entity.getTelephoneNumber());
         statement.setObject(4,entity.getAddress());
-
+        connection.close();
         return statement.executeUpdate()>0;
+    }
+
+    @Override
+    public ArrayList<CustomerEntity> getAllCustomers() throws SQLException {
+        Connection connection = CustomerServlet.ds.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM customers");
+        ArrayList<CustomerEntity> customers = new ArrayList<>();
+        ResultSet resultSet = statement.executeQuery();
+        while(resultSet.next()){
+            customers.add(new CustomerEntity(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4)
+            ));
+        }
+        connection.close();
+        return customers;
     }
 }

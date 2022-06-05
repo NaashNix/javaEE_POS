@@ -6,8 +6,13 @@ import dao.custom.CustomerDAO;
 import dto.CustomerDTO;
 import entity.CustomerEntity;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CustomerBoImpl implements CustomerBO {
 
@@ -33,5 +38,21 @@ public class CustomerBoImpl implements CustomerBO {
                 customerDTO.getTelephoneNumber(),
                 customerDTO.getAddress()
         ));
+    }
+
+    @Override
+    public JsonArrayBuilder getAllCustomers() throws SQLException {
+        ArrayList<CustomerEntity> allCustomers = customerDAO.getAllCustomers();
+        JsonArrayBuilder customerJsons = Json.createArrayBuilder();
+        for (CustomerEntity entity: allCustomers
+             ) {
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+            objectBuilder.add("id",entity.getIdNumber());
+            objectBuilder.add("name",entity.getCustomerName());
+            objectBuilder.add("telephone",entity.getTelephoneNumber());
+            objectBuilder.add("address",entity.getAddress());
+            customerJsons.add(objectBuilder.build());
+        }
+        return customerJsons;
     }
 }
