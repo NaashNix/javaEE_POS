@@ -1,5 +1,1 @@
-// Validation of the telephone number.
-function validateTelephone(telephone) {
-    const telephoneRegex = {}
-    if
-}
+// Here goes the script codes for dashboard.

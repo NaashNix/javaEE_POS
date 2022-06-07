@@ -22,11 +22,16 @@ public class CustomerDAOImpl implements CustomerDAO {
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
-            return new CustomerEntity(resultSet.getString(1)
-                    ,resultSet.getString(2)
-                    ,resultSet.getString(3)
-                    ,resultSet.getString(4));
+
+            CustomerEntity entity = new CustomerEntity(resultSet.getString(1)
+                    , resultSet.getString(2)
+                    , resultSet.getString(3)
+                    , resultSet.getString(4));
+            connection.close();
+            return entity;
+
         }
+
         connection.close();
         return null;
     }
@@ -39,8 +44,9 @@ public class CustomerDAOImpl implements CustomerDAO {
         statement.setObject(2,entity.getCustomerName());
         statement.setObject(3,entity.getTelephoneNumber());
         statement.setObject(4,entity.getAddress());
+        boolean b = statement.executeUpdate() > 0;
         connection.close();
-        return statement.executeUpdate()>0;
+        return b;
     }
 
     @Override
@@ -59,5 +65,21 @@ public class CustomerDAOImpl implements CustomerDAO {
         }
         connection.close();
         return customers;
+    }
+
+    @Override
+    public String getLastCustomerId() throws SQLException {
+        Connection connection = CustomerServlet.ds.getConnection();
+        PreparedStatement statement = connection.prepareStatement("SELECT idNumber FROM customers ORDER BY idNumber DESC LIMIT 1");
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()){
+            String lastID = resultSet.getString(1);
+            connection.close();
+            return lastID;
+        }else{
+            connection.close();
+            return null;
+        }
     }
 }

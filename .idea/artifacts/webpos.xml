@@ -11,6 +11,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/pos_server/src/utils/lib/commons-logging-1.2.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/pos_server/src/utils/lib/commons-pool2-2.11.1.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/pos_server/src/utils/lib/mysql-connector-java-5.1.49.jar" />
+          <element id="library" level="project" name="javax.json-1.1.4" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="pos_server/web/Web" />

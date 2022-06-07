@@ -18,14 +18,17 @@
 <body>
 
   <section id="loginScreen" class="w-25 h-25">
-    <form action=""  id="loginForm">
+    <form action="" id="loginForm">
       <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">username</span>
-        <input name="userName" id="usernameField" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+        <input name="userName" id="usernameField" type="text" class="form-control" placeholder="Username"
+          aria-label="Username" aria-describedby="basic-addon1">
       </div>
       <div class="input-group mb-3">
-        <span class="input-group-text" >password</span>
-        <input name="password" type="text" id="passwordField" class="form-control loginFields" placeholder="Password" aria-label="Username" aria-describedby="basic-addon1">
+    
+        <span class="input-group-text">password</span>
+        <input name="password" type="text" id="passwordField" class="form-control loginFields" placeholder="Password"
+          aria-label="Username" aria-describedby="basic-addon1">
       </div>
 
       <button type="button" onclick="loginButtonClicked()" class="btn btn-outline-primary">Login</button>
@@ -33,33 +36,33 @@
   </section>
 
   <section id="pos_dashboard_menu">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #264653 !important;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img id="company-logo" src="./assets/images/POSlogo.png" alt="">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <span class="h4 roboto-fonts thin-font mt-2" style="color: white;">
-        | Customer Database
-      </span>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-        <div class="navbar-nav poppins-font" style="font-weight: 600;">
-          <a id="posButton" class="nav-link active" href="#" aria-current="page" onclick="posClicked()">POS</a>
-          <a id="customerButton" class="nav-link" href="#" onclick="customerClicked   ()">Customers</a>
-          <a id="stockButton" class="nav-link" href="#" onclick="stockClicked()">Stocks</a>
-          <a id="reportButton" class="nav-link" href="#" onclick="reportClicked()">Reports</a>
-        </div>
-        <div class="navbar-nav" id="buttons-set">
-          <Button class="btn btn-success m-2 float-end">SALE</Button>
-          <Button class="btn btn-danger m-2">Exit</Button>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #264653 !important;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img id="company-logo" src="./assets/images/POSlogo.png" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <span class="h4 roboto-fonts thin-font mt-2" style="color: white;">
+          | Customer Database
+        </span>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+          <div class="navbar-nav poppins-font" style="font-weight: 600;">
+            <a id="posButton" class="nav-link active" href="#" aria-current="page" onclick="posClicked()">POS</a>
+            <a id="customerButton" class="nav-link" href="#" onclick="customerClicked   ()">Customers</a>
+            <a id="stockButton" class="nav-link" href="#" onclick="stockClicked()">Stocks</a>
+            <a id="reportButton" class="nav-link" href="#" onclick="reportClicked()">Reports</a>
+          </div>
+          <div class="navbar-nav" id="buttons-set">
+            <Button class="btn btn-success m-2 float-end">SALE</Button>
+            <Button class="btn btn-danger m-2">Exit</Button>
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
   </section>
 
   <!-- content -->
@@ -76,9 +79,9 @@
                   <div class="col">
                     <div class="input-group open-sans-font" style="font-weight: 700;">
                       <input type="text" class="form-control" placeholder="Customer Code"
-                        aria-label="Recipient's username with two button addons">
+                        aria-label="Recipient's username with two button addons" name="requestedID" id="searchCustomerField">
                       <button class="btn text-white" type="button"
-                        style="background-color: #2a9d8f !important; font-weight: 500;">Search</button>
+                        style="background-color: #2a9d8f !important; font-weight: 500;" onclick="loadCustomerDetails()">Search</button>
                       <button class="btn text-white" type="button"
                         style="background-color: #fb8500 !important; font-weight: 500;">View All</button>
                     </div>
@@ -86,13 +89,13 @@
                 </div>
                 <div class="row">
                   <div class="col mt-2 open-sans-font">
-                    <input type="text" class="form-control" placeholder="Customer Name" aria-label="Customer Name">
+                    <input type="text" id="customerNameField" class="form-control" placeholder="Customer Name" aria-label="Customer Name">
                   </div>
                 </div>
                 <div class="row">
                   <div class="col mt-2 open-sans-font">
                     <input type="text" class="form-control" placeholder="Telephone Number"
-                      aria-label="Customer Telephone Number">
+                      aria-label="Customer Telephone Number" id="customerTelFiled">
                   </div>
                 </div>
               </div>
@@ -166,7 +169,8 @@
 
                   <div class="col-4 mt-3">
                     <form action="" class="form-floating">
-                      <input type="number" style="height: 61px !important;" class="form-control h-100" id="batchNumberDashboard">
+                      <input type="number" style="height: 61px !important;" class="form-control h-100"
+                        id="batchNumberDashboard">
                       <label for="mfd">Batch Number</label>
                     </form>
                   </div>
@@ -358,7 +362,7 @@
 
   <!-- content -->
   <!-- This is the customer page -->
-  <div class="container-fluid" style="height: calc(100vh - 10.99vh); " id="customerPage" onloadeddata="loadAllCustomers()">
+  <div class="container-fluid" style="height: calc(100vh - 10.99vh); " id="customerPage">
     <div class="row h-75" style="background-color: #212529; color: white;">
       <div class="col m-4 p-4" id="customerDetailsTableContainer" style="height: 60vh; overflow-y: scroll;">
 
@@ -374,127 +378,8 @@
               <th class="medium-font">Active</th>
             </tr>
           </thead>
-          <tbody class="roboto-fonts">
-            <!--<tr>
-              <th>C001</th>
-              <td>Robert Patricia</th>
-              <td>070 20 53 777</th>
-              <td>Panadura</th>
-              <td>8</th>
-              <td>
-                <span class="poppins-font active-badge px-2">Active</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C002</th>
-              <td>Nimal Jayarathne</td>
-              <td>071 22 44 526</td>
-              <td>Colombo</td>
-              <td>1</td>
-              <td>
-                <span class="poppins-font disabled-badge px-2">Disabled</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C001</th>
-              <td>Robert Patricia</th>
-              <td>070 20 53 777</th>
-              <td>Panadura</th>
-              <td>8</th>
-              <td>
-                <span class="poppins-font active-badge px-2">Active</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C001</th>
-              <td>Robert Patricia</th>
-              <td>070 20 53 777</th>
-              <td>Panadura</th>
-              <td>8</th>
-              <td>
-                <span class="poppins-font active-badge px-2">Active</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C001</th>
-              <td>Robert Patricia</th>
-              <td>070 20 53 777</th>
-              <td>Panadura</th>
-              <td>8</th>
-              <td>
-                <span class="poppins-font active-badge px-2">Active</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C002</th>
-              <td>Nimal Jayarathne</td>
-              <td>071 22 44 526</td>
-              <td>Colombo</td>
-              <td>1</td>
-              <td>
-                <span class="poppins-font disabled-badge px-2">Disabled</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C002</th>
-              <td>Nimal Jayarathne</td>
-              <td>071 22 44 526</td>
-              <td>Colombo</td>
-              <td>1</td>
-              <td>
-                <span class="poppins-font disabled-badge px-2">Disabled</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C001</th>
-              <td>Robert Patricia</th>
-              <td>070 20 53 777</th>
-              <td>Panadura</th>
-              <td>8</th>
-              <td>
-                <span class="poppins-font active-badge px-2">Active</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C001</th>
-              <td>Robert Patricia</th>
-              <td>070 20 53 777</th>
-              <td>Panadura</th>
-              <td>8</th>
-              <td>
-                <span class="poppins-font active-badge px-2">Active</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C001</th>
-              <td>Robert Patricia</th>
-              <td>070 20 53 777</th>
-              <td>Panadura</th>
-              <td>8</th>
-              <td>
-                <span class="poppins-font active-badge px-2">Active</span>
-              </td>
-            </tr>
-
-            <tr>
-              <th>C001</th>
-              <td>Robert Patricia</th>
-              <td>070 20 53 777</th>
-              <td>Panadura</th>
-              <td>8</th>
-              <td>
-                <span class="poppins-font active-badge px-2">Active</span>
-              </td>
-            </tr> -->
+          <tbody class="roboto-fonts" id="customerTableBody">
+            
           </tbody>
         </table>
       </div>
@@ -503,7 +388,8 @@
       <div class="col m-4 p-4" style="height: fit-content;" id="customerQuickMenuContainer">
         <div class="row">
           <div class="col px-0">
-            <Button class="btn btn-primary mx-0" data-bs-toggle="modal" data-bs-target="#customerAddingModalBackdrop">+ Add Customers</Button>
+            <Button class="btn btn-primary mx-0" data-bs-toggle="modal" data-bs-target="#customerAddingModalBackdrop">+
+              Add Customers</Button>
 
           </div>
           <div class="col-3">
@@ -758,9 +644,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn text-white " style="background-color: #9b2226; position: absolute; left: 4%;">Clear All </button>
+          <button type="button" class="btn text-white "
+            style="background-color: #9b2226; position: absolute; left: 4%;">Clear All </button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="poppins-font medium-font btn btn-lg text-white" onclick="saveItem()" style="background-color: #2980b9;"> + SAVE</button>
+          <button type="button" class="poppins-font medium-font btn btn-lg text-white" onclick="saveItem()"
+            style="background-color: #2980b9;"> + SAVE</button>
         </div>
       </div>
     </div>
@@ -770,15 +658,15 @@
 
   <!-- Modal -->
   <!-- This is the modal for adding customers -->
-  <div class="modal fade" id="customerAddingModalBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="customerBackdropLabel" aria-hidden="true">
+  <div class="modal fade" id="customerAddingModalBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="customerBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content bg-dark">
         <div class="modal-header">
           <h4 class="modal-title poppins-font medium-font text-white" id="customerBackdropLabel">Add Customers | </h4>
           <h5 class="roboto-font  s medium-font px-2 mx-2 m-1 p-1" style="color: white;">CODE : </h5>
-          <h5 class="roboto-font  s medium-font px-2 mx-2 m-1 p-1" id="generatedCustomerCode">C002</h5>
-          <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="roboto-font  s medium-font px-2 mx-2 m-1 p-1" id="generatedCustomerCode">C003</h5>
+          <button type="button" id="addCustomerButton" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <!-- This is content of the modal -->
@@ -790,9 +678,10 @@
                 <div class="input-group mb-3" id="customerNameContainer">
                   <span class="input-group-text w-25 poppins-font medium-font" id="customerName-Addon"
                     style="background-color: #9e2a2b; border: #9e2a2b; color: white;">Customer Name</span>
-                  <input type="text" class="form-control poppins-font" onkeyup="customerFormValidation()" placeholder="Customer Name" aria-label="customer name"
-                    aria-describedby="customerName-Addon" id="customerName">
-                    <div class="red-warning" style="display: none;"><span style="font-weight: 800;">!</span></div>
+                  <input type="text" class="form-control poppins-font" onkeyup="customerFormValidation()"
+                    placeholder="Customer Name" aria-label="customer name" aria-describedby="customerName-Addon"
+                    id="customerName">
+                  <div class="red-warning" style="display: none;"><span style="font-weight: 800;">!</span></div>
                 </div>
               </div>
 
@@ -803,8 +692,8 @@
                 <div class="input-group mb-3">
                   <span class="input-group-text w-25 poppins-font medium-font" id="customerAddressAddon"
                     style="background-color: #218c74; border: #218c74; color: white;">Address</span>
-                  <input type="text" class="form-control poppins-font" placeholder="Customer Address" id="customerAddress"
-                    aria-label="customerAddressAddon" aria-describedby="customer address">
+                  <input type="text" class="form-control poppins-font" placeholder="Customer Address"
+                    id="customerAddress" aria-label="customerAddressAddon" aria-describedby="customer address">
                 </div>
               </div>
               <div class="col">
@@ -826,10 +715,13 @@
               </div>
 
               <div class="col d-flex align-items-center justify-content-around">
-                
-                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font" style="border-color: #6F1E51; background-color: #6F1E51;" id="bronzeButton">BRONZE</button>
-                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font" style="border-color: #006266;" id="silverButton">SILVER</button>
-                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font" style="border-color: #ff3f34;" id="goldButton">GOLD</button>
+
+                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font"
+                  style="border-color: #6F1E51; background-color: #6F1E51;" id="bronzeButton">BRONZE</button>
+                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font" style="border-color: #006266;"
+                  id="silverButton">SILVER</button>
+                <button class="btn w-25 p-2 registeredButton roboto-fonts medium-font" style="border-color: #ff3f34;"
+                  id="goldButton">GOLD</button>
 
               </div>
 
@@ -839,9 +731,11 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn text-white" onclick="clearCustomerAddForm()" style="background-color: #9b2226; position: absolute; left: 4%;">Clear All </button>
+          <button type="button" class="btn text-white" onclick="clearCustomerAddForm()"
+            style="background-color: #9b2226; position: absolute; left: 4%;">Clear All </button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="poppins-font medium-font btn btn-lg text-white" onclick="customerSave()" style="background-color: #27ae60;"> + SAVE</button>
+          <button type="button" class="poppins-font medium-font btn btn-lg text-white" onclick="customerSave()"
+            style="background-color: #27ae60;"> + SAVE</button>
         </div>
       </div>
     </div>

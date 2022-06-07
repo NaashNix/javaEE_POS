@@ -13,8 +13,6 @@ public class LoginDAOImpl implements LoginDAO {
     @Override
     public String getUserName(String username) throws SQLException, ClassNotFoundException {
 
-        System.out.println("DAOImpl is running.");
-
         Connection connection = LoginServlet.ds.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT user_name FROM login_details WHERE user_name = ?");
         statement.setObject(1,username);

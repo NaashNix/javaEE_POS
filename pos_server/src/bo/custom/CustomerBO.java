@@ -15,5 +15,6 @@ public interface CustomerBO extends SuperBO {
     public boolean saveCustomer(CustomerDTO customerDTO) throws SQLException;
 
     public JsonArrayBuilder getAllCustomers() throws SQLException;
-    
+
+    public String getNextCustomerId() throws SQLException;
 }

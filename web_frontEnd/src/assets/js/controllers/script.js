@@ -6,6 +6,7 @@ $("#pos_dashboard_menu").css("display", "none");
 
 // Function for the menu.
 
+
 function initializer() {
     document.getElementById("customerPage").style.display = "none";
     document.getElementById("itemListPage").style.display = "none";
@@ -19,6 +20,8 @@ function initializer() {
 
 function customerClicked() {
     initializer();
+    loadAllCustomers();
+    getLastCustomerId();
     document.getElementById("customerPage").style.display = "block";
     document.getElementById("customerButton").setAttribute("class", "nav-link active");
 }
@@ -47,18 +50,19 @@ var usernameFiled = document.querySelector("#usernameField");
 var passwordField = document.querySelector("#passwordField");
 
 usernameFiled.addEventListener("keypress", (event) => {
-    if (event.keyCode === 13) { 
+    if (event.keyCode === 13) {
         event.preventDefault();
-        
+
         loginButtonClicked();
     }
 });
 
 passwordField.addEventListener("keypress", (event) => {
-    if (event.keyCode === 13) { 
+    if (event.keyCode === 13) {
         event.preventDefault();
-        
+
         loginButtonClicked();
+
     }
 });
 
@@ -80,6 +84,7 @@ function customerFormValidation() {
 
 }
 
+
 function loginButtonClicked() {
     var data = $("#loginForm").serialize();
     console.log("DATA of the table : ", data);
@@ -95,6 +100,44 @@ function loginButtonClicked() {
     });
 }
 
+$("#addCustomerButton").click(function (e) { 
+    // e.preventDefault();
+    getLastCustomerId();    
+});
+
+
+function loadCustomerDetails(){
+    $.ajax({
+        type: "GET",
+        url: `http://localhost:8080/webpos/customer?option=SEARCH&requestedID=${$("#searchCustomerField").val()}`,
+        dataType: "json",
+        
+        success: function (response) {
+            
+            console.log("Response",response.data.name);
+            $("#customerNameField").val(response.data.name);
+            $("#customerTelFiled").val(response.data.telephone);
+
+        
+        },
+        error : function (ob,state) {
+            console.log("Error",ob,state);
+          }
+    });
+}
+
+function getLastCustomerId(){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/webpos/customer?option=GETID",
+        // dataType: "text",
+        success: function (response) {
+            var lastId = response;
+            $("#generatedCustomerCode").text(lastId);
+            console.log("Next Customer Id : ",response);
+        }
+    });
+}
 
 
 function redirectToDashboard() {
@@ -118,91 +161,12 @@ function resetInputs(id, container) {
 
     var obj = $("container div");
     obj.remove();
-    // z(container+" div").css("display","none");
-    // document.getElementById("customerNameContainer").parentNode.removeChild("div");
+    
 }
 
 
-// function dashboardClick(){
-//     initializer();
-//     document.getElementById("dashboard").style.display="block";
-//     document.getElementById("dashboard-button").setAttribute("class","nav-link active");
-// }
 
-// function stockClick(){
-//     initializer();
-//     document.getElementById("stock").style.display="block";
-//     document.getElementById("stock-button").setAttribute("class","nav-link active");
-// }
-
-// function transactionClick(){
-
-// }
-
-// function addToCartClick(){
-//     document.getElementById("grandTotal").innerText="RS. 750.00";
-//     totalChange();
-// }
-
-// function totalChange(){
-//     console.log("total changed");
-//     document.getElementById("payButton").innerText+=" ("+document.getElementById("grandTotal").innerText+")"
-// }
-
-// // Customer Table adding when click the save button.
-// function addCustomerDataToTable(){
-
-//     $("#customerTable tr").off('click');
-
-//     var name = $("#customerName").val();
-//     var code = $("#customerCode").text();
-//     var nic = $("#customerNic").val();
-//     var tel = $("#customerTel").val();
-
-//     console.log(name+" "+code+" "+nic+" "+tel); 
-
-//     $("tbody").append(
-//         "<tr>" + 
-//         "<th scope=\"row\">"+ code +"</th>" + 
-//         "<td>" + name + "</td>"  + 
-//         "<td>" + nic + "</td>" + 
-//         "<td>" + tel + "</td>"  +
-//         "</tr>"
-//     );
-
-
-//     $("#customerTable tr").click(function () {
-//         let custId = $(this).children(":eq(0)").text();
-//         let custName = $(this).children(":eq(1)").text();
-//         let custAddress = $(this).children(":eq(2)").text();
-//         let custTp = $(this).children(":eq(3)").text();
-
-//         console.log(custId, custName, custAddress, custTp);
-//     });
-
-// }   
-
-// $("#customerTable tr").click(function () {
-//     let custId = $(this).children(":eq(0)").text();
-//     let custName = $(this).children(":eq(1)").text();
-//     let custAddress = $(this).children(":eq(2)").text();
-//     let custTp = $(this).children(":eq(3)").text();
-
-//     console.log(custId, custName, custAddress, custTp);
-// }); 
-
-// var customerDB;
-// var customerObject;
-
-// $("#customerSave").click(function(){
-//     customerObject = 
-//     customerDB.unshift()
-// })
-
-
-// ------------------------------
-
-function customerSave() {   
+function customerSave() {
     var noProblem = false; // This false = no problem. if true there is problem.
     {
         if ($("#customerName").val() == "") {
@@ -229,13 +193,13 @@ function customerSave() {
         }
         if (!noProblem) {
             console.log("No Problem");
-            
+
             // Making data object to send.
             var newCustomerInfo = {
-                customerId :  $("#generatedCustomerCode").text(),
-                customerName : $("#customerName").val(),
-                customerTelephone : $("#customerTelephone").val(),
-                customerAddress : $("#customerAddress").val()
+                customerId: $("#generatedCustomerCode").text(),
+                customerName: $("#customerName").val(),
+                customerTelephone: $("#customerTelephone").val(),
+                customerAddress: $("#customerAddress").val()
             }
 
             // Saving Customer, Sending data to the servlet.
@@ -245,9 +209,9 @@ function customerSave() {
                 data: newCustomerInfo,
                 dataType: "application/json",
                 success: function (response) {
-                    console.log("Response",response);
+                    console.log("Response", response);
                 }
-            }); 
+            });
 
             // customers.push(customer);
             loadAllCustomers();
@@ -280,44 +244,30 @@ function saveItem() {
     console.log(items[0].itemName);
 }
 
-loadAllCustomers();
 
 function loadAllCustomers() {
-
+    
+    $("#customerTableBody").empty();
+    console.log("LoadAllCustomers method fired.");
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/webpos/customer?option=GETALL",
-        dataType: "dataType",
-        success: function (response) {
+        dataType: "json",
+
+        success: function (resp) {
             for (const customer of resp.data) {
-                let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.address}</td><td>${customer.salary}</td></tr>`;
-                $("#tblCustomerJson").append(row);
+                console.log("Customer : ", resp.name);
+                let row = `<tr><td>${customer.id}</td><td>${customer.name}</td><td>${customer.telephone}</td><td>${customer.address}</td><td></td><td></td></tr>`;
+                $("#customerTableBody").append(row);
             }
+        },
+        error: function (ob, state) {
+            console.log(ob, state)
         }
     });
 
-    // customers.forEach(element => {
-    //     if (element == null) {
-    //         console.log("Loaded But Null");
-    //         return;
-    //     } else {
-    //         console.log("Loaded");
-    //         let cName = element.name;
-    //         let cAddress = element.address;
-    //         let cId = element.id;
-    //         let cEmail = element.email;
-    //         let cTelephone = element.telephone;
-    //         z("#customerDetailsTable>tbody").append(
-    //             "<tr>" +
-    //     "<th scope=\"row\">"+ cId +"</th>" +
-    //     "<td>" + cName + "</td>"  +
-    //     "<td>" + cTelephone + "</td>" +
-    //     "<td>" + cAddress + "</td>"  +
-    //     "<td>" + 5 + "</td>"  +
-    //     "<td>" + null + "</td>"  +
-    //     "</tr>"
-    //         );
-    //     }
-    // });
 }
 
+
+
+// Here goes the dashboard js functions.

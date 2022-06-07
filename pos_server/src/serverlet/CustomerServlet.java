@@ -32,10 +32,41 @@ public class CustomerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String option = req.getParameter("option");
         PrintWriter writer = resp.getWriter();
+
         switch(option){
             case "SEARCH" : {
                 try {
-                    CustomerDTO requestedID = customerBO.searchCustomer(req.getParameter("requestedID"));
+                    System.out.println("search method invoked"+req.getParameter("requestedID"));
+                    CustomerDTO customer = customerBO.searchCustomer(req.getParameter("requestedID"));
+                    System.out.println("Requested ID : "+customer.getCustomerName());
+                    resp.setContentType("application/json");
+                    PrintWriter writer1 = resp.getWriter();
+
+
+                    if (customer != null){
+                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                        objectBuilder.add("id",customer.getIdNumber());
+                        objectBuilder.add("name",customer.getCustomerName());
+                        objectBuilder.add("telephone",customer.getTelephoneNumber());
+
+                        JsonObjectBuilder response = Json.createObjectBuilder();
+                        response.add("STATUS",200);
+                        response.add("data",objectBuilder.build());
+                        response.add("message","Done");
+//                        resp.setStatus(HttpServletResponse.SC_OK);
+                        writer1.print(response.build());
+
+                    }else{
+                        JsonObjectBuilder response = Json.createObjectBuilder();
+                        response.add("STATUS",400);
+                        response.add("data","");
+                        response.add("message","Customer not found!");
+//                        resp.setStatus(HttpServletResponse.SC_OK);
+                        writer1.print(response.build());
+                    }
+
+
+
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -47,10 +78,24 @@ public class CustomerServlet extends HttpServlet {
                 try {
                     JsonArrayBuilder allCustomers = customerBO.getAllCustomers();
                     JsonObjectBuilder response = Json.createObjectBuilder();
+                    resp.setContentType("application/json");
                     response.add("status", 200);
                     response.add("message", "Done");
                     response.add("data", allCustomers.build());
                     writer.print(response.build());
+
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                break;
+            }
+
+            case "GETID" : {
+                try {
+                    String nextCustomerId = customerBO.getNextCustomerId();
+                    PrintWriter writer1 = resp.getWriter();
+                    writer1.print(nextCustomerId);
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
@@ -68,7 +113,15 @@ public class CustomerServlet extends HttpServlet {
                 req.getParameter("customerAddress")
                 );
         try {
-            boolean b = customerBO.saveCustomer(customerDTO);
+
+            // Erase these shits,
+            System.out.println(customerDTO.getIdNumber());
+            System.out.println(customerDTO.getCustomerName());
+            System.out.println(customerDTO.getTelephoneNumber());
+            System.out.println(customerDTO.getAddress());
+
+
+            boolean b = customerBO. saveCustomer(customerDTO);
             System.out.println("B : "+b);
             PrintWriter writer = resp.getWriter();
             writer.print(b);
