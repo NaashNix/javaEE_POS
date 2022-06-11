@@ -106,8 +106,8 @@
                   <div class="col">
                     <div class="input-group open-sans-font" style="font-weight: 700;">
                       <input type="text" class="form-control" placeholder="Item Code"
-                        aria-label="Recipient's username with two button addons">
-                      <button class="btn text-white" type="button"
+                        aria-label="Recipient's username with two button addons" id="itemSearchField">
+                      <button class="btn text-white" type="button" onclick="searchItem()"
                         style="background-color: #8338ec !important; font-weight: 500;">Search</button>
                       <!-- Ended from here -->
 
@@ -131,15 +131,15 @@
                 <div class="row">
                   <div class="col-5">
                     <div id="item-name-container" class="p-2 text-center">
-                      <h5 style="color: white !important;">Apple Juice 125ml</h5>
+                      <h5 style="color: white !important;" id="itemNameField">Item Name</h5>
                     </div>
                   </div>
                   <div class="col-4">
                     <div class="input-group h-100">
                       <input type="number" class="form-control" placeholder="Req. Amount"
                         aria-label="Requested amount with plus minus">
-                      <button class="btn " style="color: white; background-color: #118ab2;" type="button">+</button>
-                      <button class="btn " style="color: white; background-color: #c0392b;" type="button">-</button>
+                      <button class="btn " style="color: white; background-color: #118ab2;" type="button" id="reqAmountPlus">+</button>
+                      <button class="btn " style="color: white; background-color: #c0392b;" type="button" id="reqAmountMinus">-</button>
                     </div>
                   </div>
 
@@ -153,16 +153,16 @@
                 <div class="row">
                   <div class="col-4 mt-3">
                     <form action="" class="form-floating">
-                      <input type="date" class="form-control is-valid h-75" id="floatingInputValid"
+                      <input type="date" class="form-control is-valid h-75" id="exdField"
                         placeholder="yyyy/mm/dd" value="2022 / 12 / 01">
                       <!-- <label for="floatingInputInvalid">Invalid input</label> -->
-                      <label for="floatingInputValid">Expire Date</label>
+                      <label for="exdField">Expire Date</label>
                     </form>
                   </div>
 
                   <div class="col-4 mt-3">
                     <form action="" class="form-floating">
-                      <input type="date" class="form-control h-100" id="mfdDashboard">
+                      <input type="date" class="form-control h-100" id="mfdField">
                       <label for="mfd">Manufactured Date</label>
                     </form>
                   </div>
@@ -170,7 +170,7 @@
                   <div class="col-4 mt-3">
                     <form action="" class="form-floating">
                       <input type="number" style="height: 61px !important;" class="form-control h-100"
-                        id="batchNumberDashboard">
+                        id="batchNumberField">
                       <label for="mfd">Batch Number</label>
                     </form>
                   </div>

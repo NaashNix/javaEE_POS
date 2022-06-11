@@ -18,6 +18,7 @@ public class ItemDAOImpl implements ItemDAO {
             PreparedStatement statement = connection.prepareStatement("select * from items where itemId=?");
             statement.setObject(1,itemId);
             ResultSet resultSet = statement.executeQuery();
+            System.out.println("ItemDAOImpl.getItem.try quote inside runs : "+itemId);
             while (resultSet.next()){
 
                 ItemEntity entity = new ItemEntity(resultSet.getString(1)
@@ -28,6 +29,7 @@ public class ItemDAOImpl implements ItemDAO {
                         , resultSet.getDate(6)
                         , resultSet.getDate(7));
                 connection.close();
+                System.out.println("Entity.id"+entity.getItemId());
                 return entity;
 
             }

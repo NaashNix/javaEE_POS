@@ -271,3 +271,22 @@ function loadAllCustomers() {
 
 
 // Here goes the dashboard js functions.
+
+function searchItem(){
+    console.log("Item Code : ",$("#itemSearchField").val());
+    $.ajax({
+        type: "GET",
+        url: `http://localhost:8080/webpos/item?option=SEARCH&requestedId=${$("#itemSearchField").val()}`,
+        dataType: "json",
+        success: function (response) {
+            if (response.data != null){
+                $("#exdField").val(response.data.exd);
+                $("#mfdField").val(response.data.mfd);
+                $("#batchNumberField").val(response.data.batchNumber);
+                $("#itemNameField").text(response.data.itemName);            
+text
+            }
+
+        }
+    });
+}

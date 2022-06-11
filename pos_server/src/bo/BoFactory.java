@@ -1,6 +1,7 @@
 package bo;
 
 import bo.custom.impl.CustomerBoImpl;
+import bo.custom.impl.ItemBOImpl;
 import bo.custom.impl.LoginBoImpl;
 
 public class BoFactory implements SuperBO{
@@ -17,7 +18,7 @@ public class BoFactory implements SuperBO{
     }
 
     public enum BoTypes{
-        LOGIN,CUSTOMER
+        LOGIN,CUSTOMER,ITEM
     }
 
     public static SuperBO getBO(BoTypes boTypes) {
@@ -26,6 +27,8 @@ public class BoFactory implements SuperBO{
                 return new LoginBoImpl();
             case CUSTOMER:
                 return new CustomerBoImpl();
+            case ITEM:
+                return new ItemBOImpl();
             default:
                 return null;
         }

@@ -13,7 +13,9 @@ public class ItemBOImpl implements ItemBO {
     @Override
     public ItemDTO getItem(String itemId) {
         ItemEntity item = itemDAO.getItem(itemId);
+
         if (item != null){
+            System.out.println("ItemBOImpl Not Null Method");
             return new ItemDTO(item.getItemId(),
                     item.getItemName(),
                     item.getUnitPrice(),
