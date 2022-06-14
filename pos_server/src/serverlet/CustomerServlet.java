@@ -62,7 +62,7 @@ public class CustomerServlet extends HttpServlet {
                         response.add("data","");
                         response.add("message","Customer not found!");
 //                        resp.setStatus(HttpServletResponse.SC_OK);
-                        writer1.print(response.build());
+                        
                     }
 
 

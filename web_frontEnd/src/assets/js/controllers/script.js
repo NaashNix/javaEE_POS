@@ -7,6 +7,7 @@ $("#pos_dashboard_menu").css("display", "none");
 // Function for the menu.
 
 
+
 function initializer() {
     document.getElementById("customerPage").style.display = "none";
     document.getElementById("itemListPage").style.display = "none";
@@ -271,6 +272,7 @@ function loadAllCustomers() {
 
 
 // Here goes the dashboard js functions.
+let selectedItem;
 
 function searchItem(){
     console.log("Item Code : ",$("#itemSearchField").val());
@@ -280,13 +282,41 @@ function searchItem(){
         dataType: "json",
         success: function (response) {
             if (response.data != null){
+
+                selectedItem = {
+                    id: response.data.id,
+                    name: response.data.itemName,
+                    inStock: response.data.inStock,
+                    unitPrice : response.data.unitPrice,
+
+
+                };
+
                 $("#exdField").val(response.data.exd);
                 $("#mfdField").val(response.data.mfd);
                 $("#batchNumberField").val(response.data.batchNumber);
                 $("#itemNameField").text(response.data.itemName);            
-text
             }
 
         }
     });
+}
+
+function plusButtonClicked(){
+    var inStockQuantity = selectedItem.inStock;
+    let requestedAmount = $("#requestedAmount").val();
+    if(requestedAmount == ''){
+        requestedAmount = 0;
+    }
+
+    if(inStockQuantity < requestedAmount){
+        console.log("inStockQuantity < requestedAmount");
+    }else{
+        console.log("inStockQuantity > requestedAmount");
+
+        requestedAmount = Number(requestedAmount);
+        requestedAmount = requestedAmount+1;
+        $("#requestedAmount").val(requestedAmount);
+        
+    }
 }
