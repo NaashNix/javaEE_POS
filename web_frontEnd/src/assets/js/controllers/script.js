@@ -87,18 +87,19 @@ function customerFormValidation() {
 
 
 function loginButtonClicked() {
-    var data = $("#loginForm").serialize();
-    console.log("DATA of the table : ", data);
-    $.ajax({
-        type: "POST",
-        url: "http://localhost:8080/webpos/login",
-        data: data,
-        success: function (response) {
-            if (response == 'true') {
-                redirectToDashboard();
-            }
-        }
-    });
+    // var data = $("#loginForm").serialize();
+    // console.log("DATA of the table : ", data);
+    // $.ajax({
+    //     type: "POST",
+    //     url: "http://localhost:8080/webpos/login",
+    //     data: data,
+    //     success: function (response) {
+    //         if (response == 'true') {
+    //             redirectToDashboard();
+    //         }
+    //     }
+    // });
+    redirectToDashboard();
 }
 
 $("#addCustomerButton").click(function (e) { 
@@ -302,21 +303,101 @@ function searchItem(){
     });
 }
 
+function calculateItemPrice(requestedAmount){
+    
+    var itemPriceField = $("#itemPriceField");
+    let unitPrice = selectedItem.unitPrice;
+    let itemPrice = requestedAmount * unitPrice;
+    itemPriceField.text(itemPrice.toFixed(2));
+
+}
+
 function plusButtonClicked(){
+    console.log("SelectedItm.inStock",selectedItem.inStock);
     var inStockQuantity = selectedItem.inStock;
     let requestedAmount = $("#requestedAmount").val();
     if(requestedAmount == ''){
         requestedAmount = 0;
     }
+    requestedAmount = Number(requestedAmount);
 
-    if(inStockQuantity < requestedAmount){
+    if(inStockQuantity <= requestedAmount){
         console.log("inStockQuantity < requestedAmount");
+        alert("Stock Over!")
     }else{
         console.log("inStockQuantity > requestedAmount");
-
-        requestedAmount = Number(requestedAmount);
         requestedAmount = requestedAmount+1;
         $("#requestedAmount").val(requestedAmount);
-        
+        calculateItemPrice(requestedAmount);
+
     }
+
+    
+}
+
+function minusButtonClicked(){
+    let inStockQuantity = selectedItem.inStock;
+    let requestedAmount = $('#requestedAmount').val();
+    if(requestedAmount === '' || requestedAmount === undefined){
+        // Here goes the error message for no amount.
+    }
+
+    if(requestedAmount > 0){
+        requestedAmount = Number(requestedAmount);
+        requestedAmount = requestedAmount-1;
+        $("#requestedAmount").val(requestedAmount);
+        calculateItemPrice(requestedAmount);
+    }else{
+        alert("Requested Amount is 0");
+
+    }
+
+    
+}
+
+let cartArray = [];
+
+function addToCartButtonClick(){
+    let itemPrice = Number($("#itemPriceField").text());
+    let reqQuantity = Number($("#requestedAmount").val());
+    let itemToAddCart = { 
+        id : selectedItem.id,
+        name : selectedItem.name,
+        price : itemPrice,
+        reqQuantity : reqQuantity
+    }
+
+    for (let i = 0; i < cartArray.length; i++) {
+        if (itemToAddCart.id === cartArray[i].id){
+
+            cartArray[i] = {
+                id: cartArray[i].id,
+                name: cartArray[i].name,
+                price: (itemToAddCart.price + cartArray[i].price),
+                reqQuantity: itemToAddCart.reqQuantity + cartArray[i].reqQuantity
+            };
+            updateCart();
+            return;
+        }
+    }
+
+
+    cartArray.push(itemToAddCart);
+    updateCart();
+
+}
+
+function updateCart(){
+    console.log("updateCartMethod");
+    $("#cartTableBody").empty();
+    cartArray.forEach(element => {
+        $("#cartTableBody").append(
+            `<tr>
+             <th>${element.id}</th>
+             <td>${element.name}</td>
+             <td>${element.reqQuantity}</td>
+             <td>${element.price}</td>
+            </tr>`
+        );
+    });
 }
