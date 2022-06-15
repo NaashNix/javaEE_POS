@@ -355,6 +355,23 @@ function minusButtonClicked(){
     
 }
 
+const itemPriceField = $('#itemPriceField');
+const requestedAmountField = $('#requestedAmount');
+const itemDiscountField = $('#itemDiscountField');
+
+function itemDiscountFieldTyped(){
+    if (itemPriceField.text() == '' || requestedAmountField.text() == ''){
+           alert("No Item Amount Selected!");
+
+    }else{
+
+        let totalItemPrice = Number(itemPriceField.text());
+        let totalItemPriceAfterDiscount = totalItemPrice - ((totalItemPrice/100)*
+        Number(itemDiscountField.text()));
+        itemPriceField.text(totalItemPriceAfterDiscount);
+    }
+}
+
 let cartArray = [];
 
 function addToCartButtonClick(){
