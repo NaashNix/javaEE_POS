@@ -359,18 +359,29 @@ const itemPriceField = $('#itemPriceField');
 const requestedAmountField = $('#requestedAmount');
 const itemDiscountField = $('#itemDiscountField');
 
-function itemDiscountFieldTyped(){
-    if (itemPriceField.text() == '' || requestedAmountField.text() == ''){
-           alert("No Item Amount Selected!");
 
-    }else{
-
-        let totalItemPrice = Number(itemPriceField.text());
-        let totalItemPriceAfterDiscount = totalItemPrice - ((totalItemPrice/100)*
-        Number(itemDiscountField.text()));
-        itemPriceField.text(totalItemPriceAfterDiscount);
-    }
-}
+// function itemDiscountFieldTyped(){
+//     if (itemPriceField.text() == '' || requestedAmountField.val() == ''){
+//            alert("No Item Amount Selected!");
+//
+//     }else{
+//         let currentItemPrice = 0;
+//         cartArray.forEach(element => {
+//             if (element.id == selectedItem.id){
+//                 currentItemPrice = element.price;
+//
+//             }else{
+//                 alert("Error at line 374!");
+//             }
+//         });
+//
+//         let totalItemPrice = Number(itemPriceField.text());
+//         let totalItemPriceAfterDiscount = currentItemPrice - ((currentItemPrice/100) * Number(itemDiscountField.val()));
+//         itemPriceField.text(totalItemPriceAfterDiscount.toFixed(2));
+//
+//
+//     }
+// }
 
 let cartArray = [];
 
@@ -403,6 +414,7 @@ function addToCartButtonClick(){
     updateCart();
 
 }
+
 
 function updateCart(){
     console.log("updateCartMethod");
